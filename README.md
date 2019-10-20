@@ -8,7 +8,7 @@ Open-Source **admin dashboard** with **NowUI Design** coded in **Flask**.
 
 1. Clone the repo
   ```
-  $ git clone https://github.com/app-generator/flask-now-ui-dashboard.git
+  $ git clone https://github.com/Yousab/root-finder.git
   $ cd root-finder
   ```
 
