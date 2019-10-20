@@ -181,7 +181,6 @@ demo = {
         yAxes: [{
           gridLines: 0,
           gridLines: {
-            zeroLineColor: "transparent",
             drawBorder: false
           }
         }],
@@ -316,9 +315,9 @@ demo = {
       type: 'line',
       responsive: true,
       data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: ["x:4", "x:6", "x:8", "x:10", "x:12", "x:14", "x:16","x:18", "x:20", "x:22", "x:24", "x:26"],
         datasets: [{
-          label: "Active Users",
+          label: "f(x)",
           borderColor: "#f96332",
           pointBorderColor: "#FFF",
           pointBackgroundColor: "#f96332",
@@ -332,7 +331,7 @@ demo = {
           data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 630]
         }]
       },
-      options: gradientChartOptionsConfiguration
+      options: gradientChartOptionsConfigurationWithNumbersAndGrid
     });
 
 
@@ -344,18 +343,18 @@ demo = {
 
     gradientFill = ctx.createLinearGradient(0, 170, 0, 50);
     gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
-    gradientFill.addColorStop(1, hexToRGB('#18ce0f', 0.4));
+    gradientFill.addColorStop(1, "rgba(249, 99, 59, 0.40)");
 
     myChart = new Chart(ctx, {
       type: 'line',
       responsive: true,
       data: {
-        labels: ["12pm,", "3pm", "6pm", "9pm", "12am", "3am", "6am", "9am"],
+        labels: ["x:4", "x:8", "x:12", "x:16", "x:20"],
         datasets: [{
-          label: "Email Stats",
-          borderColor: "#18ce0f",
+          label: "f(x)",
+          borderColor: "#f96332",
           pointBorderColor: "#FFF",
-          pointBackgroundColor: "#18ce0f",
+          pointBackgroundColor: "#f96332",
           pointBorderWidth: 2,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 1,
@@ -363,7 +362,41 @@ demo = {
           fill: true,
           backgroundColor: gradientFill,
           borderWidth: 2,
-          data: [40, 500, 650, 700, 1200, 1250, 1300, 1900]
+          data: [{x: 4, y: 34.115}, {x: 8, y:17.653}, {x: 12, y:6.06}, {x:16, y:-2.26}, {x:20, y:-8.40}]
+        }]
+      },
+      options: gradientChartOptionsConfigurationWithNumbersAndGrid
+    });
+
+    /**Secant Algo Chart */
+    ctx = document.getElementById('lineChartSecantWithNumbersAndGrid').getContext("2d");
+
+    gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
+    gradientStroke.addColorStop(0, '#18ce0f');
+    gradientStroke.addColorStop(1, chartColor);
+
+    gradientFill = ctx.createLinearGradient(0, 170, 0, 50);
+    gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+    gradientFill.addColorStop(1, "rgba(249, 99, 59, 0.40)");
+
+    myChart = new Chart(ctx, {
+      type: 'line',
+      responsive: true,
+      data: {
+        labels: ["x:4", "x:6", "x:8", "x:10", "x:12", "x:14", "x:16"],
+        datasets: [{
+          label: "f(x)",
+          borderColor: "#f96332",
+          pointBorderColor: "#FFF",
+          pointBackgroundColor: "#f96332",
+          pointBorderWidth: 2,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 1,
+          pointRadius: 4,
+          fill: true,
+          backgroundColor: gradientFill,
+          borderWidth: 2,
+          data: [{x: 4, y: 30}, {x: 6, y:17}, {x: 8, y:6}, {x:10, y:-2}, {x:12, y:-8}, {x:14, y:10}, {x:16, y:20}]
         }]
       },
       options: gradientChartOptionsConfigurationWithNumbersAndGrid

@@ -9,6 +9,7 @@ from flask import json, url_for, redirect, render_template, flash, g, session, j
 from werkzeug.exceptions import HTTPException, NotFound, abort
 
 import os
+import sys
 
 from app  import app
 
@@ -18,7 +19,7 @@ from app         import app, lm, db, bc
 from . models    import User
 from . common    import COMMON, STATUS
 from . assets    import *
-from . forms     import LoginForm, RegisterForm
+from . forms     import LoginForm, RegisterForm, AlgoForm
 
 import os, shutil, re, cgi
         
@@ -195,6 +196,54 @@ def index(path):
                                 content=render_template( 'pages/'+path) )
     except:
         abort(404)
+
+##################################################################################
+## Custom Algo Routes
+##################################################################################
+@app.route('/bisection', methods=['GET', 'POST'])
+def bisectionPage():
+    #define the general algo form
+    form = AlgoForm(request.form)
+
+    if form.validate_on_submit():
+        return render_template('layouts/default.html',
+                                content=render_template( 'pages/program.html',
+                                form=form,
+                                return_value="return_values") )
+    else:
+        return render_template('layouts/default.html',
+                                content=render_template( 'pages/program.html',
+                                form=form) )
+
+@app.route('/false-position', methods=['GET', 'POST'])
+def falsePositionPage():
+    #define the general algo form
+    form = AlgoForm(request.form)
+
+    if form.validate_on_submit():
+        return render_template('layouts/default.html',
+                                content=render_template( 'pages/program.html',
+                                form=form,
+                                return_value="return_values") )
+    else:
+        return render_template('layouts/default.html',
+                                content=render_template( 'pages/program.html',
+                                form=form) )
+
+@app.route('/secant', methods=['GET', 'POST'])
+def SecantPage():
+    #define the general algo form
+    form = AlgoForm(request.form)
+
+    if form.validate_on_submit():
+        return render_template('layouts/default.html',
+                                content=render_template( 'pages/program.html',
+                                form=form,
+                                return_value="return_values") )
+    else:
+        return render_template('layouts/default.html',
+                                content=render_template( 'pages/program.html',
+                                form=form) )
 
 #@app.route('/favicon.ico')
 #def favicon():

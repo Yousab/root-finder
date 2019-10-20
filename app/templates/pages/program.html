@@ -1,0 +1,155 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Program Inputs</h5>
+                    <label>Please use the following equation tips for function input</label>
+                    <div>
+                        <p style="font-size: 10px; margin-bottom: 0;"><span class="text-info">Power:</span> ^</p>
+                        <p style="font-size: 10px; margin-bottom: 0;"><span class="text-info">Exponential:</span>
+                            exp(number)</p>
+                        <p style="font-size: 10px; margin-bottom: 0;"><span class="text-info">Square Root:</span>
+                            sqrt(number)</p>
+                    </div>
+                </div>
+                <div class="card-body mt-lg-5">
+
+                    <form role="form" method="POST" action="">
+                        {{ form.csrf_token }}
+
+                        {% if form.errors %}
+                            {% for error in form.errors %}
+                                <p class="text-danger">{{error}}</p>
+                            {% endfor %}
+                        {% endif %}
+
+                        <div class="row">
+
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label>Function</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    {{ form.equation(placeholder="Function f(x)",class="form-control") }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label>X Initial Value</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    {{ form.xValue(placeholder="X Initial Value",class="form-control",type="number") }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label>X Step Value</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    {{ form.stepValue(placeholder="X Step Value",class="form-control",type="number") }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label>Termination Criteria</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <div class="form-check form-check-radio form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="termination_criteria"
+                                                id="termination_criteria_el" value="true" checked>
+                                            Iteration
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-radio form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="termination_criteria"
+                                                id="termination_criteria_el" value="true">
+                                            Error
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    {{ form.terminationValue(placeholder="Termination Value",class="form-control") }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <button type="submit" class="btn btn-fill btn-primary">Calculate</button>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {% if return_value %}
+    <div class="row">
+        {{return_value}}
+    </div>
+    {% endif %}
+</div>
