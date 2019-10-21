@@ -22,6 +22,8 @@ from . assets    import *
 from . forms     import LoginForm, RegisterForm, AlgoForm
 
 import os, shutil, re, cgi
+
+from . algos import BiSection
         
 # provide login manager with load_user callback
 @lm.user_loader
@@ -206,10 +208,29 @@ def bisectionPage():
     form = AlgoForm(request.form)
 
     if form.validate_on_submit():
+
+        # assign form data to variables
+        equation = request.form.get('equation', '', type=str)
+        xValue = request.form.get('xValue', '', type=int)
+        stepValue = request.form.get('stepValue', '', type=int)
+        terminationValue = request.form.get('terminationValue', '', type=int)
+
+        bisectionObj = BiSection(equation)
+
+        genertedTable = bisectionObj.generate_table(xValue, stepValue)
+        xRoot = bisectionObj.bisect(genertedTable['xl'],genertedTable['xu'], terminationValue)
+
+        values = [{ 'x': 4, 'y': 34.115 }, { 'x': 8, 'y': 17.653 }, { 'x': 12, 'y': 6.06 }, { 'x': 16, 'y': -2.26 }, { 'x': 20, 'y': -8.40 }]
+
         return render_template('layouts/default.html',
                                 content=render_template( 'pages/program.html',
                                 form=form,
-                                return_value="return_values") )
+                                return_value="return_values",
+                                xLower=genertedTable['xl'],
+                                xUpper=genertedTable['xu'],
+                                xRoot=xRoot,
+                                xyTable=genertedTable['table']),
+                                tableValues=values )
     else:
         return render_template('layouts/default.html',
                                 content=render_template( 'pages/program.html',
