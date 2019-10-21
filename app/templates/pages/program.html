@@ -284,17 +284,19 @@
                 gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
                 gradientFill.addColorStop(1, "rgba(249, 99, 59, 0.40)");
                 chartDataPoints = [];
+                chartDataLabels = [];
 
                 //Generate chart data from the xyTable backend
                 {% for item in xyTable.items() %}
-                chartDataPoints.push({ x: '{{item[0]}}', y: '{{item[1]}}' })
+                chartDataPoints.push({ x: '{{item[0]}}', y: '{{item[1]}}' });
+                chartDataLabels.push('x:{{item[0]}}');
                 {% endfor %}
 
                 myChart = new Chart(ctx, {
                     type: 'line',
                     responsive: true,
                     data: {
-                        labels: ["x:4", "x:8", "x:12", "x:16", "x:20"],
+                        labels: chartDataLabels,
                         datasets: [{
                             label: "f(x)",
                             borderColor: "#f96332",

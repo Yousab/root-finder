@@ -6,20 +6,24 @@ Date: 21,Oct 2019
 
 from math import *
 import pandas as pd
-#import seaborn as sns
 
 
 class BiSection:
 
     fn            = ''
 
+    #fn is the f(x) which is a form input
     def __init__(self, fn):
         self.fn       = fn
 
+    # Evaluate f(x)
     def f(self, x):
         #return (667.38/x)*(1-exp(-0.145843*x))-40
         return eval(self.fn)
 
+    #Generate table values in (x,y) points, Get x lower and x upper
+    #x param is the initial x from a form input
+    #s param is the x incrementer step
     def generate_table(self, x, s):
         returnedValues = dict()
         table_dict={}
@@ -35,6 +39,9 @@ class BiSection:
         return returnedValues
         #bisect(xl, xu, 0.000001)
 
+    #Apply the bisect algorithm
+    #xl is the lower x bound value
+    #xu is the upper x bound value
     def bisect(self,xl, xu, es):
         while True:
             xm = (xl+xu)/2
@@ -49,4 +56,3 @@ class BiSection:
                 break
         xr = xm
         return xr
-        #plot(list(values_dict.keys()), list(values_dict.values()), xr)
