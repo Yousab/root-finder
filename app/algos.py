@@ -39,6 +39,44 @@ class BiSection:
         return returnedValues
         #bisect(xl, xu, 0.000001)
 
+    def bisect_iter(self,xl,xu,iMax):
+        iter=0
+        while iter <= iMax:
+            xm  = (xl+xu)/2
+            fl= self.f(xl)
+            fm = self.f(xm)
+            test = fl * fm
+            if test < 0:
+                xu = xm
+            elif test > 0:
+                xl = xm
+            else:
+                break
+            iter = iter +1
+        xr = xm
+        return xr
+
+    def bisect_error(self,xl,xu,eValue):
+        iter=0
+        xm_old=0
+        while True:
+            xm  = (xl+xu)/2
+            if abs(xm - xm_old) >= eValue:
+                fl=self.f(xl)
+                fm = self.f(xm)
+                test = fl * fm
+                if test < 0:
+                    xu = xm
+                elif test > 0:
+                    xl = xm
+                else:
+                    break
+                iter = iter +1
+            else:
+                break
+        xr = xm
+        return xr
+
     #Apply the bisect algorithm
     #xl is the lower x bound value
     #xu is the upper x bound value

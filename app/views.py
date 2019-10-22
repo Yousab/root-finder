@@ -213,24 +213,28 @@ def bisectionPage():
         equation = request.form.get('equation', '', type=str)
         xValue = request.form.get('xValue', '', type=int)
         stepValue = request.form.get('stepValue', '', type=int)
-        terminationValue = request.form.get('terminationValue', '', type=int)
+        terminationCriteria = request.form.get('termination_criteria')
+        terminationValue = request.form.get('terminationValue', '', type=str)
 
         bisectionObj = BiSection(equation)
 
         genertedTable = bisectionObj.generate_table(xValue, stepValue)
-        xRoot = bisectionObj.bisect(genertedTable['xl'],genertedTable['xu'], terminationValue)
 
-        values = [{ 'x': 4, 'y': 34.115 }, { 'x': 8, 'y': 17.653 }, { 'x': 12, 'y': 6.06 }, { 'x': 16, 'y': -2.26 }, { 'x': 20, 'y': -8.40 }]
+        if terminationCriteria == 'it':
+            terminationValue=int(terminationValue)
+            xRoot = bisectionObj.bisect_iter(genertedTable['xl'],genertedTable['xu'], terminationValue)
+        else:
+            terminationValue=float(terminationValue)
+            xRoot = bisectionObj.bisect_error(genertedTable['xl'],genertedTable['xu'], terminationValue)
 
         return render_template('layouts/default.html',
                                 content=render_template( 'pages/program.html',
                                 form=form,
-                                return_value="return_values",
+                                return_value="true",
                                 xLower=genertedTable['xl'],
                                 xUpper=genertedTable['xu'],
                                 xRoot=xRoot,
-                                xyTable=genertedTable['table']),
-                                tableValues=values )
+                                xyTable=genertedTable['table'],))
     else:
         return render_template('layouts/default.html',
                                 content=render_template( 'pages/program.html',
