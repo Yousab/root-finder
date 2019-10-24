@@ -94,3 +94,34 @@ class BiSection:
                 break
         xr = xm
         return xr
+
+
+class Secant:
+
+    def __init__(self, fn_str):
+        self.fn_str = str(fn_str)
+
+    def fn(self, x):
+        return eval(self.fn_str)
+
+    def secant(self, x0, x1, iterr, err):
+        i = 1
+        table_dict = dict()
+        returnedValues = dict()
+        returnedValues['xl'] = x0
+        returnedValues['xu'] = x1
+        while True:
+            try:
+                table_dict[x0] = self.fn(x0)
+                x_new = x1 - ((x1-x0) / (self.fn(x1) - self.fn(x0))) * self.fn(x1)
+            except ZeroDivisionError:
+                print("dividing by zero error")
+            if abs(x_new - x1) <= err or i == iterr:
+                table_dict[x_new] = self.fn(x_new)
+                returnedValues['table'] = table_dict
+                return x_new, i, returnedValues
+            else:
+                x0 = x1
+                x1 = x_new
+                i += 1
+

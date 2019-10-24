@@ -24,6 +24,7 @@ from . forms     import LoginForm, RegisterForm, AlgoForm
 import os, shutil, re, cgi
 
 from . algos import BiSection
+from . algos import Secant
         
 # provide login manager with load_user callback
 @lm.user_loader
@@ -259,12 +260,32 @@ def falsePositionPage():
 def SecantPage():
     #define the general algo form
     form = AlgoForm(request.form)
-
     if form.validate_on_submit():
+        # assign form data to variables
+        equation = request.form.get('equation', '', type=str)
+        xValue = request.form.get('xValue', '', type=int)
+        stepValue = request.form.get('stepValue', '', type=int)
+        terminationCriteria = request.form.get('termination_criteria')
+        terminationValue = request.form.get('terminationValue', '', type=str)
+
+        secantObj = Secant(equation)
+
+
+        # genertedTable = secantObj.generate_table(xValue, stepValue)
+
+        iterr = int(terminationValue) if terminationCriteria == 'it' else 10
+        err = int(terminationValue) if terminationCriteria != 'it' else 0
+
+        xRoot, iteration_number, returnedValues = secantObj.secant(x0=xValue, x1=stepValue, iterr=iterr, err=err)
+
         return render_template('layouts/default.html',
                                 content=render_template( 'pages/program.html',
                                 form=form,
-                                return_value="return_values") )
+                                return_value = "true",
+                                # xLower = returnedValues['xl'],
+                                # xUpper = returnedValues['xu'],
+                                xRoot = xRoot,
+                                xyTable = returnedValues['table']) )
     else:
         return render_template('layouts/default.html',
                                 content=render_template( 'pages/program.html',
