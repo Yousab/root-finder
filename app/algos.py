@@ -125,3 +125,24 @@ class Secant:
                 x1 = x_new
                 i += 1
 
+from numpy.linalg import norm
+class fixedPoint:
+    def __init__(self, equation_str):
+        self.equation_str = str(equation_str)  # ex: x^5 + 2 * x^2 - 3
+        return
+
+    def get_new_x(self, x):
+        new_x = eval(self.equation_str) + x
+        return new_x
+
+    def solve_fixed_point(self, x0, tol=10e-5, maxiter=100):
+        e = 1
+        i = 0
+        xp = [x0]
+        while e > tol and i < maxiter:
+            new_x = self.get_new_x(x0)
+            e = norm(x0 - new_x)
+            x0 = new_x
+            xp.append(x0)
+            i += 1
+        return x0, xp
