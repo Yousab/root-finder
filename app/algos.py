@@ -6,6 +6,7 @@ Date: 21,Oct 2019
 
 from math import *
 import pandas as pd
+from datetime import datetime
 
 
 class BiSection:
@@ -126,23 +127,45 @@ class Secant:
                 i += 1
 
 from numpy.linalg import norm
-class fixedPoint:
+class FixedPoint:
+
     def __init__(self, equation_str):
         self.equation_str = str(equation_str)  # ex: x^5 + 2 * x^2 - 3
         return
 
-    def get_new_x(self, x):
+    def f(self, x):
+        return eval(self.equation_str)
+
+    def g(self, x):
         new_x = eval(self.equation_str) + x
         return new_x
 
-    def solve_fixed_point(self, x0, tol=10e-5, maxiter=100):
+    def solve_fixed_point(self, x0, tolerance=10e-5, maxiter=100):
+        start_time = datetime.now()
         e = 1
         i = 0
         xp = [x0]
-        while e > tol and i < maxiter:
-            new_x = self.get_new_x(x0)
-            e = norm(x0 - new_x)
+        fx = [self.f(x0)]
+        returned_values = {'convergence': False}
+        while i < maxiter:
+            new_x = self.g(x0)
+            # e = norm(x0 - new_x)
             x0 = new_x
+            y = self.f(x0)
             xp.append(x0)
+            fx.append(y)
+            if abs(self.f(x0)) < tolerance:
+                returned_values['convergence'] = True
+                returned_values['x0'] = x0
+                returned_values['xp'] = xp
+                returned_values['fx'] = fx
+                break
             i += 1
-        return x0, xp
+        end_time = datetime.now()
+        returned_values['time'] = end_time - start_time
+        return returned_values
+
+
+# fixedPoint = FixedPoint('x**5+x**2-3')
+# result = fixedPoint.solve_fixed_point(x0=-1, tolerance=0.001, maxiter=100)
+# print(result)
