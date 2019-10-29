@@ -134,7 +134,8 @@ class FixedPoint:
         return
 
     def f(self, x):
-        return eval(self.equation_str)
+        res = eval(self.equation_str)
+        return res
 
     def g(self, x):
         new_x = eval(self.equation_str) + x
@@ -149,7 +150,9 @@ class FixedPoint:
         returned_values = {'convergence': False}
         while i < maxiter:
             new_x = self.g(x0)
-            # e = norm(x0 - new_x)
+            e = abs(x0 - new_x)
+            if e > 1:
+                break
             x0 = new_x
             y = self.f(x0)
             xp.append(x0)
@@ -162,10 +165,13 @@ class FixedPoint:
                 break
             i += 1
         end_time = datetime.now()
-        returned_values['time'] = end_time - start_time
+        returned_values['time'] = (end_time - start_time).microseconds
         return returned_values
 
 
-# fixedPoint = FixedPoint('x**5+x**2-3')
-# result = fixedPoint.solve_fixed_point(x0=-1, tolerance=0.001, maxiter=100)
-# print(result)
+# this is for testing
+# fixedPoint = FixedPoint('2*(x**2)+5*x+2')
+# for i in [2, 1, -1, -2]:
+#     result = fixedPoint.solve_fixed_point(x0=i, tolerance=0.001, maxiter=100)
+#     print(result)
+#     print()
