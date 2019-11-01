@@ -19,8 +19,21 @@ class RegisterForm(FlaskForm):
 	email       = StringField  (u'Email'     , validators=[DataRequired(), Email()])
 	name        = StringField  (u'Name'      , validators=[DataRequired()])
 
-class AlgoForm(FlaskForm):
+class BiSectionForm(FlaskForm):
 	equation    = StringField  (u'Function f(x)'  , validators=[DataRequired()])
 	xValue    	= IntegerField  (u'X Value'  , validators=[DataRequired()])
 	stepValue   = IntegerField  (u'Step Value'  , validators=[DataRequired()])
 	terminationValue    = StringField  (u'Termination Value'  , validators=[DataRequired()])
+
+class SecantForm(FlaskForm):
+	equation    = StringField  (u'Function f(x)'  , validators=[DataRequired()])
+	x0Value    	= IntegerField  (u'X0 Value'  , validators=[DataRequired()])
+	x1Value    	= IntegerField  (u'X1 Value'  , validators=[DataRequired()])
+	iteratorValue   = IntegerField  (u'Iterator Value'  , validators=[DataRequired()])
+	errorValue   = StringField  (u'Error Value'  , validators=[DataRequired()])
+
+class FixedPointForm(FlaskForm):
+	equation    = StringField  (u'Function f(x)'  , validators=[DataRequired()])
+	x0Value    	= IntegerField  (u'X0 Value'  , validators=[DataRequired()])
+	tolerance   = StringField  (u'Tolerance Value'  , validators=[])
+	maxiter   = IntegerField  (u'Maxiter Value'  , validators=[])

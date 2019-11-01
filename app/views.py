@@ -19,12 +19,11 @@ from app         import app, lm, db, bc
 from . models    import User
 from . common    import COMMON, STATUS
 from . assets    import *
-from . forms     import LoginForm, RegisterForm, AlgoForm
+from . forms     import LoginForm, RegisterForm, BiSectionForm, SecantForm, FixedPointForm
 
 import os, shutil, re, cgi
 
-from . algos import BiSection
-from . algos import Secant
+from . algos import BiSection, Secant, FixedPoint
         
 # provide login manager with load_user callback
 @lm.user_loader
@@ -206,7 +205,7 @@ def index(path):
 @app.route('/bisection', methods=['GET', 'POST'])
 def bisectionPage():
     #define the general algo form
-    form = AlgoForm(request.form)
+    form = BiSectionForm(request.form)
 
     if form.validate_on_submit():
 
@@ -229,7 +228,7 @@ def bisectionPage():
             xRoot = bisectionObj.bisect_error(genertedTable['xl'],genertedTable['xu'], terminationValue)
 
         return render_template('layouts/default.html',
-                                content=render_template( 'pages/program.html',
+                                content=render_template( 'pages/bisection.html',
                                 form=form,
                                 return_value="true",
                                 xLower=genertedTable['xl'],
@@ -238,57 +237,81 @@ def bisectionPage():
                                 xyTable=genertedTable['table'],))
     else:
         return render_template('layouts/default.html',
-                                content=render_template( 'pages/program.html',
+                                content=render_template( 'pages/bisection.html',
                                 form=form) )
 
 @app.route('/false-position', methods=['GET', 'POST'])
 def falsePositionPage():
     #define the general algo form
-    form = AlgoForm(request.form)
+    form = BiSectionForm(request.form)
 
     if form.validate_on_submit():
         return render_template('layouts/default.html',
-                                content=render_template( 'pages/program.html',
+                                content=render_template( 'pages/false-position.html',
                                 form=form,
                                 return_value="return_values") )
     else:
         return render_template('layouts/default.html',
-                                content=render_template( 'pages/program.html',
+                                content=render_template( 'pages/false-position.html',
                                 form=form) )
 
 @app.route('/secant', methods=['GET', 'POST'])
-def SecantPage():
+def secantPage():
     #define the general algo form
-    form = AlgoForm(request.form)
+    form = SecantForm(request.form)
     if form.validate_on_submit():
         # assign form data to variables
         equation = request.form.get('equation', '', type=str)
-        xValue = request.form.get('xValue', '', type=int)
-        stepValue = request.form.get('stepValue', '', type=int)
-        terminationCriteria = request.form.get('termination_criteria')
-        terminationValue = request.form.get('terminationValue', '', type=str)
+        x0Value = request.form.get('x0Value', '', type=int)
+        x1Value = request.form.get('x1Value', '', type=int)
+        iteratorValue = request.form.get('iteratorValue', '', type=int)
+        errorValue = request.form.get('errorValue', '', type=str)
 
         secantObj = Secant(equation)
 
-
-        # genertedTable = secantObj.generate_table(xValue, stepValue)
-
-        iterr = int(terminationValue) if terminationCriteria == 'it' else 10
-        err = int(terminationValue) if terminationCriteria != 'it' else 0
-
-        xRoot, iteration_number, returnedValues = secantObj.secant(x0=xValue, x1=stepValue, iterr=iterr, err=err)
+        xRoot, iterationNumber, returnedValues = secantObj.secant(x0=x0Value, x1=x1Value, iterr=iteratorValue, err=float(errorValue))
 
         return render_template('layouts/default.html',
-                                content=render_template( 'pages/program.html',
+                                content=render_template( 'pages/secant.html',
                                 form=form,
                                 return_value = "true",
-                                # xLower = returnedValues['xl'],
-                                # xUpper = returnedValues['xu'],
+                                x0 = x0Value,
+                                x1 = x1Value,
                                 xRoot = xRoot,
+                                noOfIterations = iterationNumber,
                                 xyTable = returnedValues['table']) )
     else:
         return render_template('layouts/default.html',
-                                content=render_template( 'pages/program.html',
+                                content=render_template( 'pages/secant.html',
+                                form=form) )
+
+@app.route('/fixed-point', methods=['GET', 'POST'])
+def fixedPointPage():
+    #define the general algo form
+    form = FixedPointForm(request.form)
+    if form.validate_on_submit():
+        # assign form data to variables
+        equation = request.form.get('equation', '', type=str)
+        x0Value = int(request.form.get('x0Value', '', type=int))
+        toleranceValue = float(request.form.get('tolerance', '', type=str)) if (request.form.get('tolerance')) else ''
+        maxiterValue = int(request.form.get('maxiter', '', type=int)) if (request.form.get('maxiter')) else ''
+
+        fixedPointObj = FixedPoint(equation)
+
+        returnedValues = fixedPointObj.solve_fixed_point(x0=x0Value, tolerance=toleranceValue, maxiter=maxiterValue)
+
+        return render_template('layouts/default.html',
+                                content=render_template( 'pages/fixed-point.html',
+                                form=form,
+                                return_value = "true",
+                                x0 = returnedValues['x0'],
+                                xp = returnedValues['xp'],
+                                fx = returnedValues['fx'],
+                                convergence = returnedValues['convergence'],
+                                execution_time = returnedValues['time']) )
+    else:
+        return render_template('layouts/default.html',
+                                content=render_template( 'pages/fixed-point.html',
                                 form=form) )
 
 #@app.route('/favicon.ico')

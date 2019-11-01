@@ -1,0 +1,321 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Program Inputs</h5>
+                    <label>Please use the following equation tips for function input</label>
+                    <div>
+                        <p style="font-size: 10px; margin-bottom: 0;"><span class="text-info">Power:</span> ^</p>
+                        <p style="font-size: 10px; margin-bottom: 0;"><span class="text-info">Exponential:</span>
+                            exp(number)</p>
+                        <p style="font-size: 10px; margin-bottom: 0;"><span class="text-info">Square Root:</span>
+                            sqrt(number)</p>
+                    </div>
+                </div>
+                <div class="card-body mt-lg-5">
+
+                    <form role="form" method="POST" action="">
+                        {{ form.csrf_token }}
+
+                        {% if form.errors %}
+                        {% for error in form.errors %}
+                        <p class="text-danger">{{error}}</p>
+                        {% endfor %}
+                        {% endif %}
+
+                        <div class="row">
+
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label>Function</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    {{ form.equation(placeholder="Function f(x)",class="form-control") }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label>X Initial Value</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    {{ form.xValue(placeholder="X Initial Value",class="form-control",type="number") }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label>X Step Value</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    {{ form.stepValue(placeholder="X Step Value",class="form-control",type="number") }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label>Termination Criteria</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <div class="form-check form-check-radio form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="termination_criteria"
+                                                id="termination_criteria_el" value="it" checked>
+                                            Iteration
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-radio form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="termination_criteria"
+                                                id="termination_criteria_el" value="er">
+                                            Error
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    {{ form.terminationValue(placeholder="Termination Value",class="form-control") }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <button type="submit" class="btn btn-fill btn-primary">Calculate</button>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {% if return_value %}
+    <div class="row">
+
+        <div class="header-title col-lg-12">
+            <h1>Results</h1>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Tables</h5>
+                    <h4 class="card-title">Values Table</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <th>X</th>
+                                <th>f(X)</th>
+                            </thead>
+                            <tbody>
+                                {% for key, value in xyTable.items() %}
+                                <tr>
+                                    <td>{{key}}</td>
+                                    <td>{{value}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Findings</h5>
+                    <h4 class="card-title">Important Values</h4>
+                </div>
+                <div class="card-body">
+                    <div class="card-stats">
+                        <p><span class="text-info">X Lower: </span>{{xLower}}</p>
+                        <p><span class="text-info">X Upper: </span>{{xUpper}}</p>
+                        <p><span class="text-info">X Root: </span>{{xRoot}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Graphs</h5>
+                    <h4 class="card-title">Function Graph</h4>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="lineChartAlgoDraw"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="/static/assets/js/core/jquery.min.js"></script>
+        <script src="/static/assets/js/plugins/chartjs.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.4"></script>
+        <script>
+            $(document).ready(function () {
+
+                // General configuration for the charts with Line gradientStroke
+                gradientChartOptionsConfigurationWithNumbersAndGrid = {
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        bodySpacing: 4,
+                        mode: "nearest",
+                        intersect: 0,
+                        position: "nearest",
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    responsive: true,
+                    scales: {
+                        yAxes: [{
+                            gridLines: 0,
+                            gridLines: {
+                                drawBorder: false
+                            }
+                        }],
+                        xAxes: [{
+                            display: 0,
+                            gridLines: 0,
+                            ticks: {
+                                display: false
+                            },
+                            gridLines: {
+                                zeroLineColor: "transparent",
+                                drawTicks: false,
+                                display: false,
+                                drawBorder: false
+                            }
+                        }]
+                    },
+                    pan: {
+                        enabled: true,
+                        mode: 'x',
+                    },
+                    zoom: {
+                        enabled: true,
+                        mode: 'x',
+                    },
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 15,
+                            bottom: 15
+                        }
+                    }
+                };
+
+                chartColor = "#FFFFFF";
+                ctx = document.getElementById('lineChartAlgoDraw').getContext("2d");
+
+                gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
+                gradientStroke.addColorStop(0, '#18ce0f');
+                gradientStroke.addColorStop(1, chartColor);
+
+                gradientFill = ctx.createLinearGradient(0, 170, 0, 50);
+                gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+                gradientFill.addColorStop(1, "rgba(249, 99, 59, 0.40)");
+                chartDataPoints = [];
+                chartDataLabels = [];
+
+                //Generate chart data from the xyTable backend
+                {% for item in xyTable.items() %}
+                chartDataPoints.push({ x: '{{item[0]}}', y: '{{item[1]}}' });
+                chartDataLabels.push('x:{{item[0]}}');
+                {% endfor %}
+
+                myChart = new Chart(ctx, {
+                    type: 'line',
+                    responsive: true,
+                    data: {
+                        labels: chartDataLabels,
+                        datasets: [{
+                            label: "f(x)",
+                            borderColor: "#f96332",
+                            pointBorderColor: "#FFF",
+                            pointBackgroundColor: "#f96332",
+                            pointBorderWidth: 2,
+                            pointHoverRadius: 4,
+                            pointHoverBorderWidth: 1,
+                            pointRadius: 4,
+                            fill: true,
+                            backgroundColor: gradientFill,
+                            borderWidth: 2,
+                            data: chartDataPoints
+                        }]
+                    },
+                    options: gradientChartOptionsConfigurationWithNumbersAndGrid
+                });
+            });
+        </script>
+    </div>
+    {% endif %}
+</div>

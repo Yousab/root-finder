@@ -17,24 +17,27 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li>
-            <a href="/bisection">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               <i class="now-ui-icons education_atom"></i>
-              <p>BiSection</p>
+              <span>Bracketing Methods</span>
             </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/bisection">BiSection</a>
+              <a class="dropdown-item" href="/false-position">False Position</a>
+            </div>
           </li>
-          <li>
-            <a href="/false-position">
-              <i class="now-ui-icons design-2_ruler-pencil"></i>
-              <p>False Position</p>
-            </a>
-          </li>
-          <li>
-            <a href="/secant">
-              <i class="now-ui-icons media-2_sound-wave"></i>
-              <p>Secant</p>
-            </a>
-          </li>
+
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="now-ui-icons design-2_ruler-pencil"></i>
+                <span>Open Methods</span>
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/secant">Secant</a>
+                <a class="dropdown-item" href="/fixed-point">Fixed Point</a>
+              </div>
+            </li>
 
           {% if current_user.is_authenticated %}
 

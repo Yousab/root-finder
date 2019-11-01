@@ -1,0 +1,143 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Program Inputs</h5>
+                    <label>Please use the following equation tips for function input</label>
+                    <div>
+                        <p style="font-size: 10px; margin-bottom: 0;"><span class="text-info">Power:</span> ^</p>
+                        <p style="font-size: 10px; margin-bottom: 0;"><span class="text-info">Exponential:</span>
+                            exp(number)</p>
+                        <p style="font-size: 10px; margin-bottom: 0;"><span class="text-info">Square Root:</span>
+                            sqrt(number)</p>
+                    </div>
+                </div>
+                <div class="card-body mt-lg-5">
+
+                    <form role="form" method="POST" action="">
+                        {{ form.csrf_token }}
+
+                        {% if form.errors %}
+                        {% for error in form.errors %}
+                        <p class="text-danger">{{error}}</p>
+                        {% endfor %}
+                        {% endif %}
+
+                        <div class="row">
+
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label>Function</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    {{ form.equation(placeholder="Function f(x)",class="form-control") }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label>X0</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    {{ form.x0Value(placeholder="X0 Value",class="form-control",type="number") }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
+                                    <label>Tolerance Value</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    {{ form.tolerance(placeholder="Tolerance Value",class="form-control") }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                                <div class="col-md-1 pr-1"></div>
+    
+                                <div class="col-md-2 pr-1">
+                                    <div class="form-group">
+                                        <label>Maxiter Value</label>
+                                    </div>
+                                </div>
+    
+                                <div class="col-md-6 pr-1">
+                                    <div class="form-group">
+                                        {{ form.maxiter(placeholder="Maxiter Value",class="form-control",type="number") }}
+                                    </div>
+                                </div>
+    
+                            </div>
+
+                        <div class="row">
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <button type="submit" class="btn btn-fill btn-primary">Calculate</button>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {% if return_value %}
+    <div class="row">
+
+        <div class="header-title col-lg-12">
+            <h1>Results</h1>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Findings</h5>
+                    <h4 class="card-title">Important Values</h4>
+                </div>
+                <div class="card-body">
+                    <div class="card-stats">
+                        <p><span class="text-info">X0: </span>{{x0}}</p>
+                        <p><span class="text-info">Xp: </span>{{xp}}</p>
+                        <p><span class="text-info">Fx: </span>{{fx}}</p>
+                        <p><span class="text-info">Convergence: </span>{{convergence}}</p>
+                        <p><span class="text-info">Execution Time: </span>{{execution_time}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
