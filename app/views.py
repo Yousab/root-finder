@@ -305,11 +305,6 @@ def fixedPointPage():
                                 form=form,
                                 return_value = "true",
                                 returnedValues = returnedValues['time']) )
-                                # x0 = returnedValues['x0'],
-                                # xp = returnedValues['xp'],
-                                # fx = returnedValues['fx'],
-                                # convergence = returnedValues['convergence'],
-                                # execution_time = returnedValues['time']) )
     else:
         return render_template('layouts/default.html',
                                 content=render_template( 'pages/fixed-point.html',
