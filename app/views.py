@@ -304,11 +304,12 @@ def fixedPointPage():
                                 content=render_template( 'pages/fixed-point.html',
                                 form=form,
                                 return_value = "true",
-                                x0 = returnedValues['x0'],
-                                xp = returnedValues['xp'],
-                                fx = returnedValues['fx'],
-                                convergence = returnedValues['convergence'],
-                                execution_time = returnedValues['time']) )
+                                returnedValues = returnedValues['time']) )
+                                # x0 = returnedValues['x0'],
+                                # xp = returnedValues['xp'],
+                                # fx = returnedValues['fx'],
+                                # convergence = returnedValues['convergence'],
+                                # execution_time = returnedValues['time']) )
     else:
         return render_template('layouts/default.html',
                                 content=render_template( 'pages/fixed-point.html',
