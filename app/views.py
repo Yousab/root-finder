@@ -292,11 +292,12 @@ def fixedPointPage():
     if form.validate_on_submit():
         # assign form data to variables
         equation = request.form.get('equation', '', type=str)
+        g_equation = '' # todo - get equation from user here
         x0Value = int(request.form.get('x0Value', '', type=int))
         toleranceValue = float(request.form.get('tolerance', '', type=str)) if (request.form.get('tolerance')) else ''
         maxiterValue = int(request.form.get('maxiter', '', type=int)) if (request.form.get('maxiter')) else ''
 
-        fixedPointObj = FixedPoint(equation)
+        fixedPointObj = FixedPoint(equation, g_equation)
 
         returnedValues = fixedPointObj.solve_fixed_point(x0=x0Value, tolerance=toleranceValue, maxiter=maxiterValue)
 
@@ -304,7 +305,8 @@ def fixedPointPage():
                                 content=render_template( 'pages/fixed-point.html',
                                 form=form,
                                 return_value = "true",
-                                returnedValues = returnedValues['time']) )
+                                execution_time=returnedValues['time'],
+                                returnedValues = returnedValues) )
     else:
         return render_template('layouts/default.html',
                                 content=render_template( 'pages/fixed-point.html',

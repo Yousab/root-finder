@@ -129,8 +129,9 @@ class Secant:
 from numpy.linalg import norm
 class FixedPoint:
 
-    def __init__(self, equation_str):
+    def __init__(self, equation_str, g_str):
         self.equation_str = str(equation_str)  # ex: x^5 + 2 * x^2 - 3
+        self.g_str = str(g_str)
         return
 
     def f(self, x):
@@ -138,9 +139,10 @@ class FixedPoint:
         return res
 
     def g(self, x):
-        new_x = eval(self.equation_str) + x
+        new_x = eval(self.g_str)
         return new_x
 
+    from numpy.linalg import norm
     def solve_fixed_point(self, x0, tolerance=10e-5, maxiter=100):
         start_time = datetime.now()
         e = 1
@@ -150,7 +152,7 @@ class FixedPoint:
         returned_values = {'convergence': False}
         while i < maxiter:
             new_x = self.g(x0)
-            e = abs(x0 - new_x)
+            e = norm(x0 - new_x)
             if e > 1:
                 break
             x0 = new_x

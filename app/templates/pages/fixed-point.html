@@ -130,11 +130,11 @@
                 <div class="card-body">
                     {% if returnedValues['convergence'] %}
                     <div class="card-stats">
-                        <p><span class="text-info">X0: </span>{{x0}}</p>
-                        <p><span class="text-info">Xp: </span>{{xp}}</p>
-                        <p><span class="text-info">Fx: </span>{{fx}}</p>
-                        <p><span class="text-info">Convergence: </span>{{convergence}}</p>
-                        <p><span class="text-info">Execution Time: </span>{{execution_time}}</p>
+                        <p><span class="text-info">Root: </span>{{returnedValues['x0']}}</p>
+                        <p><span class="text-info">Xp: </span>{{returnedValues['xp']}}</p>
+                        <p><span class="text-info">Fx: </span>{{returnedValues['fx']}}</p>
+                        <p><span class="text-info">Convergence: </span>{{returnedValues['convergence']}}</p>
+                        <p><span class="text-info">Execution Time: </span>{{returnedValues['time']}}</p>
                     </div>
                     {% else %}
                     <div class="card-stats">
