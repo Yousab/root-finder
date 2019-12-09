@@ -34,6 +34,7 @@ class SecantForm(FlaskForm):
 
 class FixedPointForm(FlaskForm):
 	equation    = StringField  (u'Function f(x)'  , validators=[DataRequired()])
-	x0Value    	= IntegerField  (u'X0 Value'  , validators=[DataRequired()])
+	x0Value    	= StringField  (u'X0 Value'  , validators=[DataRequired()])
 	tolerance   = StringField  (u'Tolerance Value'  , validators=[])
-	maxiter   = IntegerField  (u'Maxiter Value'  , validators=[])
+	maxiter   = StringField  (u'Maxiter Value'  , validators=[])
+	gequation    = StringField  (u'Function g(x)'  , validators=[DataRequired()])

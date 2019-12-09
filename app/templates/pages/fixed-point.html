@@ -50,13 +50,31 @@
 
                             <div class="col-md-2 pr-1">
                                 <div class="form-group">
+                                    <label>G Function</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    {{ form.gequation(placeholder="Function g(x)",class="form-control") }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-1 pr-1"></div>
+
+                            <div class="col-md-2 pr-1">
+                                <div class="form-group">
                                     <label>X0</label>
                                 </div>
                             </div>
 
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
-                                    {{ form.x0Value(placeholder="X0 Value",class="form-control",type="number") }}
+                                    {{ form.x0Value(placeholder="X0 Value",class="form-control") }}
                                 </div>
                             </div>
 
@@ -92,7 +110,7 @@
     
                                 <div class="col-md-6 pr-1">
                                     <div class="form-group">
-                                        {{ form.maxiter(placeholder="Maxiter Value",class="form-control",type="number") }}
+                                        {{ form.maxiter(placeholder="Maxiter Value",class="form-control") }}
                                     </div>
                                 </div>
     
